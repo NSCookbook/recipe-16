@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 #import "ViewController.h"
+#import "AFNetworking.h"
 
 @interface ViewController ()
 
@@ -34,17 +35,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
     self.restuarantNameLabel.text = [self.restuarantDetail objectForKey:@"name"];
-    self.restuarantImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.restuarantDetail objectForKey:@"icon"]]]];
+    [self.restuarantImageView setImageWithURL:[NSURL URLWithString:[self.restuarantDetail objectForKey:@"icon"]]];
     self.restuarantAddressView.text = [self.restuarantDetail objectForKey:@"formatted_address"];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

@@ -49,12 +49,6 @@
     [self makeRestuarantsRequests];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - AFNetworking 
 
 -(void)makeRestuarantsRequests{
@@ -62,25 +56,16 @@
     NSURL *url = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=restuarants+in+sydney&sensor=false&key=Your Key"];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    //BoilerPlate AFNetworking Asynchronous 
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation
-                                JSONRequestOperationWithRequest:request
-                                success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-                                         {
 
-                                             self.googlePlacesArrayFromAFNetworking = [JSON objectForKey:@"results"];
-
-                                             [self.tableView reloadData];
-                                         }
-                                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
-                                         {
-                                    NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-                                         }];
-    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id responseObject) {
+                                                                                            self.googlePlacesArrayFromAFNetworking = [responseObject objectForKey:@"results"];
+                                                                                            [self.tableView reloadData];
+                                                                                        }
+                                                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id responseObject) {
+                                                                                            NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+                                                                                        }];
     [operation start];
-    
-    
 }
 
 
@@ -88,18 +73,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
     // Return the number of sections.
-
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
     // Return the number of rows in the section.
     return [self.googlePlacesArrayFromAFNetworking count];
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,18 +105,14 @@
     return cell;
 }
 
-
-
 #pragma mark - Prepare For Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     ViewController *detailViewController = (ViewController *)segue.destinationViewController;
     //set NSDictionary Item restuarantDetail in detailViewController
     detailViewController.restuarantDetail = [self.googlePlacesArrayFromAFNetworking objectAtIndex:indexPath.row];
-    
 }
 
 

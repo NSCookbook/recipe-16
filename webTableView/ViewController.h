@@ -29,9 +29,8 @@
 
 @property (strong, nonatomic) NSDictionary *restuarantDetail;
 
-@property (strong, nonatomic) IBOutlet UILabel *restuarantNameLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *restuarantImageView;
-@property (strong, nonatomic) IBOutlet UITextView *restuarantAddressView;
-
+@property (strong, nonatomic) IBOutlet UILabel      *restuarantNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView  *restuarantImageView;
+@property (strong, nonatomic) IBOutlet UITextView   *restuarantAddressView;
 
 @end
